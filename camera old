@@ -1,0 +1,39 @@
+--[[
+📷 CÂMERA OLD
+✅ Estilo de câmera antiga do Roblox
+✅ Sem painel, sem lag
+✅ Liga automaticamente ao executar
+✅ Compatível com Delta SEM KEY
+]]
+
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+
+-- Configurações
+local LIGADO_POR_PADRAO = true
+local AJUSTE_ALTURA = 0.35 -- quanto maior, mais alta a câmera
+
+local ligado = LIGADO_POR_PADRAO
+
+-- Loop principal
+RunService.RenderStepped:Connect(function()
+    if not ligado then return end
+    
+    local cam = Workspace.CurrentCamera
+    if not cam then return end
+
+    -- Sobe levemente a câmera como era no estilo antigo
+    local distancia = (cam.Focus.Position - cam.CFrame.Position).Magnitude
+    if distancia > 1 then
+        cam.CFrame += Vector3.new(0, AJUSTE_ALTURA, 0)
+    end
+end)
+
+-- Comando pra ligar/desligar: digita no executor → CameraOld()
+_G.CameraOld = function()
+    ligado = not ligado
+    print(ligado and "✅ Câmera Old: LIGADA" or "⛔ Câmera Old: DESLIGADA")
+end
+
+print("✅ Câmera Old carregada!")
+print("Digite CameraOld() pra ligar/desligar")
